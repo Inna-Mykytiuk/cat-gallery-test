@@ -146,9 +146,9 @@ const CatGallery: React.FC = () => {
               <p>{cat.breeds[0]?.name || 'Unknown Breed'}</p>
               <button
                 onClick={() => removeFavorite(cat)}
-                className="p-1 bg-red-500 text-white rounded"
+                className="p-1"
               >
-                Delete from Favorite
+                <FaHeart className="mr-1 text-red-500" />
               </button>
             </div>
           </div>
