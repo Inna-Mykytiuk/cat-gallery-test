@@ -1,18 +1,9 @@
+// src/components/CatGallery.tsx
+
 import React, { useState } from 'react';
-import axios from 'axios';
-import { useQuery } from 'react-query';
 import { useCatStore } from '../store/useStore';
-
-interface Breed {
-  id: string;
-  name: string;
-}
-
-interface CatImage {
-  id: string;
-  url: string;
-  breeds: Breed[];
-}
+import { FaHeart } from "react-icons/fa";
+import { useBreeds, useCatImages } from '../hooks/useCatQueries';
 
 const CatGallery: React.FC = () => {
   const [page, setPage] = useState<number>(0);
@@ -22,30 +13,9 @@ const CatGallery: React.FC = () => {
   // Витягування улюблених котів з Zustand Store
   const { favorites, addFavorite, removeFavorite } = useCatStore();
 
-  // Використання react-query для отримання списку порід
-  const { data: breeds = [], error: breedsError } = useQuery(
-    'breeds',
-    async () => {
-      const response = await axios.get<Breed[]>('https://api.thecatapi.com/v1/breeds?api_key=live_cdh15RXPzJfwEjosvt3aBjDvy064dn7ALDvHxW3ioJmMgZSkRgbG5KUIeo427OB3');
-      return response.data;
-    },
-    {
-      staleTime: 600000, // Кешуємо породи на 10 хвилин, оскільки вони рідко змінюються
-    }
-  );
-
-  // Використання react-query для отримання зображень котів
-  const { data: catImages = [], error: imagesError } = useQuery(
-    ['catImages', selectedBreed, page],  // Ключ включає обрану породу і сторінку для оновлення при зміні
-    async () => {
-      const response = await axios.get<CatImage[]>(`https://api.thecatapi.com/v1/images/search?limit=${limit}&breed_ids=${selectedBreed}&api_key=live_cdh15RXPzJfwEjosvt3aBjDvy064dn7ALDvHxW3ioJmMgZSkRgbG5KUIeo427OB3&page=${page}`);
-      return response.data;
-    },
-    {
-      keepPreviousData: true, // Зберігає попередні дані, поки завантажуються нові
-      staleTime: 300000, // Кешуємо зображення на 5 хвилин
-    }
-  );
+  // Використання логіки запитів
+  const { data: breeds = [], error: breedsError } = useBreeds();
+  const { data: catImages = [], error: imagesError } = useCatImages(selectedBreed, page, limit);
 
   // Обробка помилок
   if (breedsError) {
@@ -94,16 +64,18 @@ const CatGallery: React.FC = () => {
             <div className="absolute bottom-0 left-0 right-0 bg-white opacity-80 p-2 text-center z-50">
               <p>{cat.breeds[0]?.name || 'Unknown Breed'}</p>
               <button
-                onClick={() => addFavorite(cat)}
-                className="mr-2 p-1 bg-green-500 text-black rounded"
+                onClick={() => {
+                  if (favorites.some(fav => fav.id === cat.id)) {
+                    removeFavorite(cat);
+                  } else {
+                    addFavorite(cat);
+                  }
+                }}
+                className="flex items-center justify-center text-xl"
               >
-                Add to Favorite
-              </button>
-              <button
-                onClick={() => removeFavorite(cat)}
-                className="p-1 bg-red-500 text-black rounded"
-              >
-                Delete from Favorite
+                <FaHeart
+                  className={`mr - 1 ${favorites.some(fav => fav.id === cat.id) ? 'text-red-500' : 'text-black opacity-50'}`}
+                />
               </button>
             </div>
           </div>
@@ -141,9 +113,9 @@ const CatGallery: React.FC = () => {
               <p>{cat.breeds[0]?.name || 'Unknown Breed'}</p>
               <button
                 onClick={() => removeFavorite(cat)}
-                className="p-1 bg-red-500 text-white rounded"
+                className="p-1"
               >
-                Delete from Favorite
+                <FaHeart className="mr-1 text-red-500" />
               </button>
             </div>
           </div>
