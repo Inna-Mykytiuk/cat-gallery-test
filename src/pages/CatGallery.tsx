@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import { useCatStore } from '../store/useStore';
 import { FaHeart } from "react-icons/fa6";
 import { useBreeds, useCatImages } from '../hooks/useCatQueries';
-import BreedFilter from '../components/BreedFilter';
 import { Link } from 'react-router-dom';
+import BreedFilter from '../components/BreedFilter';
 
 const CatGallery: React.FC = () => {
   const [page, setPage] = useState<number>(0);
