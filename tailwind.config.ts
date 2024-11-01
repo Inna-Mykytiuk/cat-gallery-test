@@ -31,9 +31,12 @@ const config: Config = {
           "linear-gradient(180deg, rgba(0, 0, 0, 0.65) 15.4%, rgba(0, 0, 0, 0.39) 23.9%, rgba(0, 0, 0, 0.00) 34.4%)",
         checkmark: `url(/icons/checkmark.svg)`,
         backdrop: `linear-gradient(rgba(41, 41, 41, 0.40),rgba(41, 41, 41, 0.40))`,
+        gradient: `linear-gradient(90deg, #9ea7fc 0%, #65b6f7 100%)`,
       },
       boxShadow: {
         shadow: "0px 10px 24px -15px rgba(0, 0, 0, 0.5)",
+        input: "0px 5px 15px -12px rgba(0, 0, 0, 0.5)",
+        "custom-card": "0px 0px 10px 0px #d2d7e0",
       },
       content: {
         arrowUp: `url(/icons/arrowUp.svg)`,
