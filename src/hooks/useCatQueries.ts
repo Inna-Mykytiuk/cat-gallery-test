@@ -2,6 +2,8 @@ import { useQuery } from "react-query";
 import axios from "axios";
 import { Breed, CatImage } from "../types/catTypes.ts";
 
+// const API_KEY = import.meta.env.VITE_CAT_API_KEY;
+
 export const useBreeds = () => {
   return useQuery<Breed[], Error>(
     "breeds",
