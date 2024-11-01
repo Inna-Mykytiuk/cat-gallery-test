@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useQuery } from 'react-query';
 import { useCatStore } from '../store/useStore';
+import { FaHeart } from "react-icons/fa6";
 
 interface Breed {
   id: string;
@@ -94,16 +95,18 @@ const CatGallery: React.FC = () => {
             <div className="absolute bottom-0 left-0 right-0 bg-white opacity-80 p-2 text-center z-50">
               <p>{cat.breeds[0]?.name || 'Unknown Breed'}</p>
               <button
-                onClick={() => addFavorite(cat)}
-                className="mr-2 p-1 bg-green-500 text-black rounded"
+                onClick={() => {
+                  if (favorites.some(fav => fav.id === cat.id)) {
+                    removeFavorite(cat);
+                  } else {
+                    addFavorite(cat);
+                  }
+                }}
+                className="flex items-center justify-center text-xl"
               >
-                Add to Favorite
-              </button>
-              <button
-                onClick={() => removeFavorite(cat)}
-                className="p-1 bg-red-500 text-black rounded"
-              >
-                Delete from Favorite
+                <FaHeart
+                  className={`mr-1 ${favorites.some(fav => fav.id === cat.id) ? 'text-red-500' : 'text-black opacity-50'}`}
+                />
               </button>
             </div>
           </div>
