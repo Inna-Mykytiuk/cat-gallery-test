@@ -15,6 +15,8 @@ interface CatImage {
   breeds: Breed[];
 }
 
+
+const API_KEY = import.meta.env.VITE_CAT_API_KEY;
 const CatGallery: React.FC = () => {
   const [page, setPage] = useState<number>(0);
   const [selectedBreed, setSelectedBreed] = useState<string>('');
@@ -27,7 +29,7 @@ const CatGallery: React.FC = () => {
   const { data: breeds = [], error: breedsError } = useQuery(
     'breeds',
     async () => {
-      const response = await axios.get<Breed[]>('https://api.thecatapi.com/v1/breeds?api_key=live_cdh15RXPzJfwEjosvt3aBjDvy064dn7ALDvHxW3ioJmMgZSkRgbG5KUIeo427OB3');
+      const response = await axios.get<Breed[]>(`https://api.thecatapi.com/v1/breeds?api_key=${API_KEY}`);
       return response.data;
     },
     {
@@ -39,7 +41,7 @@ const CatGallery: React.FC = () => {
   const { data: catImages = [], error: imagesError } = useQuery(
     ['catImages', selectedBreed, page],  // Ключ включає обрану породу і сторінку для оновлення при зміні
     async () => {
-      const response = await axios.get<CatImage[]>(`https://api.thecatapi.com/v1/images/search?limit=${limit}&breed_ids=${selectedBreed}&api_key=live_cdh15RXPzJfwEjosvt3aBjDvy064dn7ALDvHxW3ioJmMgZSkRgbG5KUIeo427OB3&page=${page}`);
+      const response = await axios.get<CatImage[]>(`https://api.thecatapi.com/v1/images/search?limit=${limit}&breed_ids=${selectedBreed}&api_key=${API_KEY}&page=${page}`);
       return response.data;
     },
     {
