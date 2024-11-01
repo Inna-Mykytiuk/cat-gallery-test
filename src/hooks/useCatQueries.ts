@@ -7,9 +7,7 @@ export const useBreeds = () => {
     "breeds",
     async () => {
       const response = await axios.get<Breed[]>(
-        `${import.meta.env.VITE_API_BASE_URL}/breeds?api_key=${
-          import.meta.env.VITE_CAT_API_KEY
-        }`
+        `https://api.thecatapi.com/v1/breeds?api_key=live_cdh15RXPzJfwEjosvt3aBjDvy064dn7ALDvHxW3ioJmMgZSkRgbG5KUIeo427OB3`
       );
       return response.data;
     },
@@ -28,11 +26,7 @@ export const useCatImages = (
     ["catImages", selectedBreed, page],
     async () => {
       const response = await axios.get<CatImage[]>(
-        `${
-          import.meta.env.VITE_API_BASE_URL
-        }/images/search?limit=${limit}&breed_ids=${selectedBreed}&api_key=${
-          import.meta.env.VITE_CAT_API_KEY
-        }&page=${page}`
+        `https://api.thecatapi.com/v1/images/search?limit=${limit}&breed_ids=${selectedBreed}&api_key=live_cdh15RXPzJfwEjosvt3aBjDvy064dn7ALDvHxW3ioJmMgZSkRgbG5KUIeo427OB3&page=${page}`
       );
       return response.data;
     },
