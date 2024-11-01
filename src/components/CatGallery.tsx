@@ -1,8 +1,6 @@
-// src/components/CatGallery.tsx
-
 import React, { useState } from 'react';
 import { useCatStore } from '../store/useStore';
-import { FaHeart } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa6";
 import { useBreeds, useCatImages } from '../hooks/useCatQueries';
 
 const CatGallery: React.FC = () => {
