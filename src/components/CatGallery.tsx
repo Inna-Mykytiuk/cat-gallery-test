@@ -1,7 +1,9 @@
+// src/components/CatGallery.tsx
 import React, { useState } from 'react';
 import { useCatStore } from '../store/useStore';
 import { FaHeart } from "react-icons/fa6";
 import { useBreeds, useCatImages } from '../hooks/useCatQueries';
+import BreedFilter from './BreedFilter'; // Імпорт нового компонента
 
 const CatGallery: React.FC = () => {
   const [page, setPage] = useState<number>(0);
@@ -31,24 +33,13 @@ const CatGallery: React.FC = () => {
     <div className='container'>
       <h1>Cat Gallery</h1>
 
-      {/* Фільтр за породами */}
-      <div className="mt-4">
-        <label htmlFor="breed-select" className="block text-lg">Select Breed:</label>
-        <select
-          id="breed-select"
-          value={selectedBreed}
-          onChange={(e) => {
-            setSelectedBreed(e.target.value);
-            setPage(0); // Скидання сторінки при зміні породи
-          }}
-          className="p-2 border rounded"
-        >
-          <option value="">All Breeds</option>
-          {breeds.map((breed) => (
-            <option key={breed.id} value={breed.id}>{breed.name}</option>
-          ))}
-        </select>
-      </div>
+      {/* Використання компонента фільтра */}
+      <BreedFilter
+        selectedBreed={selectedBreed}
+        breeds={breeds}
+        setSelectedBreed={setSelectedBreed}
+        setPage={setPage}
+      />
 
       {/* Галерея зображень */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mt-4">
@@ -72,7 +63,7 @@ const CatGallery: React.FC = () => {
                 className="flex items-center justify-center text-xl"
               >
                 <FaHeart
-                  className={`mr - 1 ${favorites.some(fav => fav.id === cat.id) ? 'text-red-500' : 'text-black opacity-50'}`}
+                  className={`mr-1 ${favorites.some(fav => fav.id === cat.id) ? 'text-red-500' : 'text-black opacity-50'}`}
                 />
               </button>
             </div>
