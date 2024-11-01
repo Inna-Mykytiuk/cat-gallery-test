@@ -17,6 +17,7 @@ interface CatImage {
 
 
 const API_KEY = import.meta.env.VITE_CAT_API_KEY;
+
 const CatGallery: React.FC = () => {
   const [page, setPage] = useState<number>(0);
   const [selectedBreed, setSelectedBreed] = useState<string>('');
