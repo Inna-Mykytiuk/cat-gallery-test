@@ -10,8 +10,8 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route index element={<Test />} />
-        <Route path="gallery" element={<CatGallery />} />
+        <Route index element={<CatGallery />} />
+        <Route path='test' element={<Test />} />
         {/* <Route index element={<CatGallery />} />
         <Route path="favorites" element={<FavoriteCats />} /> */}
       </Route>
