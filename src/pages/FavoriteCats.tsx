@@ -22,8 +22,7 @@ const FavoriteCats: React.FC = () => {
 
   return (
     <section className="pb-[50px] md:pb-[100px]">
-      <div className="container">
-        <h2 className="text-2xl font-bold mt-8">Favorite Cats</h2>
+      <div className="container mt-8">
         <div className="custom-grid mt-4">
           {favorites.length === 0 ? (
             <p>No favorite cats added yet.</p>
