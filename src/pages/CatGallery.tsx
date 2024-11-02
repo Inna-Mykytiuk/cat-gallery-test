@@ -2,19 +2,18 @@ import React, { useState } from 'react';
 import { useCatStore } from '../store/useStore';
 import { FaHeart } from "react-icons/fa6";
 import { useBreeds, useCatImages } from '../hooks/useCatQueries';
-import { FaArrowCircleRight, FaArrowCircleLeft } from "react-icons/fa";
 
 import BreedFilter from '../components/BreedFilter';
 
 const CatGallery: React.FC = () => {
-  const [page, setPage] = useState<number>(0);
+  const [limit, setLimit] = useState<number>(9);
   const [selectedBreed, setSelectedBreed] = useState<string>('');
-  const limit = 9;
+  const [, setPage] = useState<number>(0);
 
   const { favorites, addFavorite, removeFavorite } = useCatStore();
 
   const { data: breeds = [], error: breedsError } = useBreeds();
-  const { data: catImages = [], error: imagesError, isLoading } = useCatImages(selectedBreed, page, limit); // Додано isLoading
+  const { data: catImages = [], error: imagesError, isLoading } = useCatImages(selectedBreed);
 
   if (breedsError) {
     console.error('Error fetching breeds:', breedsError);
@@ -23,14 +22,13 @@ const CatGallery: React.FC = () => {
     console.error('Error fetching cat images:', imagesError);
   }
 
-  const nextPage = () => setPage((prevPage) => prevPage + 1);
-  const prevPage = () => setPage((prevPage) => Math.max(prevPage - 1, 0));
+  const loadMore = () => setLimit((prevLimit) => prevLimit + 9);
 
   return (
     <section className='pb-[100px]'>
       <div className='container'>
 
-        {/* Використання компонента фільтра */}
+        {/* Фільтр порід */}
         <BreedFilter
           selectedBreed={selectedBreed}
           breeds={breeds}
@@ -38,16 +36,14 @@ const CatGallery: React.FC = () => {
           setPage={setPage}
         />
 
-        {/* Лоадер */}
         {isLoading ? (
           <div className="flex justify-center items-center h-64">
             <span className="loader">Loading...</span>
           </div>
         ) : (
           <>
-            {/* Галерея зображень */}
             <ul className="custom-grid mt-4">
-              {catImages.map((cat) => (
+              {catImages.slice(0, limit).map((cat) => (
                 <li key={cat.id} className="relative shadow-custom-card rounded-md overflow-hidden">
                   <img
                     src={cat.url}
@@ -70,28 +66,21 @@ const CatGallery: React.FC = () => {
                         className={`mr-1 transition-colors duration-300 ${favorites.some(fav => fav.id === cat.id) ? 'text-red-500' : 'text-white/70 group-hover:text-red-500'}`}
                       />
                     </button>
-
                   </div>
                 </li>
               ))}
             </ul>
 
-            {/* Пагінація - відображати тільки коли не завантажується */}
-            <div className="mt-4 flex justify-center items-center gap-4">
-              <button
-                onClick={prevPage}
-                className="p-2 bg-gray-500 text-white text-3xl rounded disabled:opacity-50"
-                disabled={page === 0}
-              >
-                <FaArrowCircleLeft />
-              </button>
-              <button
-                onClick={nextPage}
-                className="p-2 bg-gray-500 text-3xl text-white rounded disabled:opacity-50"
-              >
-                <FaArrowCircleRight />
-              </button>
-            </div>
+            {limit < catImages.length && (
+              <div className="mt-4 flex justify-center">
+                <button
+                  onClick={loadMore}
+                  className="p-2 bg-gray-500 text-white text-lg rounded"
+                >
+                  Load More
+                </button>
+              </div>
+            )}
           </>
         )}
       </div>

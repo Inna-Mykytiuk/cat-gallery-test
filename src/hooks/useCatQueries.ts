@@ -17,16 +17,12 @@ export const useBreeds = () => {
   );
 };
 
-export const useCatImages = (
-  selectedBreed: string,
-  page: number,
-  limit: number
-) => {
+export const useCatImages = (selectedBreed: string) => {
   return useQuery<CatImage[], Error>(
-    ["catImages", selectedBreed, page],
+    ["catImages", selectedBreed],
     async () => {
       const response = await axios.get<CatImage[]>(
-        `https://api.thecatapi.com/v1/images/search?limit=${limit}&breed_ids=${selectedBreed}&api_key=live_cdh15RXPzJfwEjosvt3aBjDvy064dn7ALDvHxW3ioJmMgZSkRgbG5KUIeo427OB3&page=${page}`
+        `https://api.thecatapi.com/v1/images/search?limit=100&breed_ids=${selectedBreed}&api_key=live_cdh15RXPzJfwEjosvt3aBjDvy064dn7ALDvHxW3ioJmMgZSkRgbG5KUIeo427OB3`
       );
       return response.data;
     },
