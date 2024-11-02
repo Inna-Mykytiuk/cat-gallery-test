@@ -10,7 +10,15 @@ interface CatModalProps {
   imageUrl: string;
 }
 
-const CatModal: React.FC<CatModalProps> = ({ isOpen, onClose, name, temperament, description, lifeSpan, imageUrl }) => {
+const CatModal: React.FC<CatModalProps> = ({
+  isOpen,
+  onClose,
+  name,
+  temperament,
+  description,
+  lifeSpan,
+  imageUrl,
+}) => {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
@@ -30,12 +38,18 @@ const CatModal: React.FC<CatModalProps> = ({ isOpen, onClose, name, temperament,
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white p-6 rounded-lg w-11/12 max-w-md relative">
+    <div
+      className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+      onClick={onClose}
+    >
+      <div
+        className="bg-white p-6 rounded-lg w-11/12 max-w-md relative"
+        onClick={(e) => e.stopPropagation()}
+      >
         <button onClick={onClose} className="absolute top-0 right-2 text-2xl text-black/50 font-bold">
           ×
         </button>
-        <img src={imageUrl} alt={`Cat ${name}`} className="w-full h-агдд object-cover rounded-md mb-4" />
+        <img src={imageUrl} alt={`Cat ${name}`} className="w-full h-auto object-cover rounded-md mb-4" />
         <h2 className="text-2xl font-bold mb-2">{name}</h2>
         <p className="italic text-sm mb-4">{temperament}</p>
         <p className="mb-4">{description}</p>

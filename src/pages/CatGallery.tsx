@@ -11,7 +11,7 @@ const CatGallery: React.FC = () => {
   const [limit, setLimit] = useState<number>(9);
   const [selectedBreed, setSelectedBreed] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [selectedCat, setSelectedCat] = useState<CatImage | null>(null); // Зміна типу на CatImage
+  const [selectedCat, setSelectedCat] = useState<CatImage | null>(null);
   const [, setPage] = useState<number>(0);
 
   const { favorites, addFavorite, removeFavorite } = useCatStore();
