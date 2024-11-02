@@ -54,7 +54,7 @@ const CatGallery: React.FC = () => {
                   <img
                     src={cat.url}
                     alt={`Cat ${cat.breeds[0]?.name}`}
-                    className="w-full h-full object-cover object-center cursor-pointer"
+                    className="w-full h-full object-cover object-center cursor-pointer hover:scale-110 transition-all duration-200 ease-in-out"
                     onClick={() => openModal(cat)}
                   />
                   <div className="absolute bottom-0 left-0 right-0 bg-black/20 backdrop-blur-sm py-4 px-4 text-center z-50 flex items-center justify-between">

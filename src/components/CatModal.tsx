@@ -43,7 +43,7 @@ const CatModal: React.FC<CatModalProps> = ({
       onClick={onClose}
     >
       <div
-        className="bg-white p-6 rounded-lg w-11/12 max-w-md relative"
+        className="bg-white p-6 rounded-lg w-11/12 max-w-md max-h-[80vh] overflow-y-auto relative" // Додаємо max-h та overflow-y-auto
         onClick={(e) => e.stopPropagation()}
       >
         <button onClick={onClose} className="absolute top-0 right-2 text-2xl text-black/50 font-bold">
