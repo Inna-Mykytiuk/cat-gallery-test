@@ -9,8 +9,9 @@ interface BreedFilterProps {
 
 const BreedFilter: React.FC<BreedFilterProps> = ({ selectedBreed, breeds, setSelectedBreed, setPage }) => {
   return (
-    <div className="flex items-center justify-center gap-4 my-8">
-      <label htmlFor="breed-select" className="block text-lg">
+
+    <div className="flex items-center justify-center gap-0 sm:gap-4 my-2 sm:my-8">
+      <label htmlFor="breed-select" className="block text-base sm:text-lg">
         Select Breed:
       </label>
       <select
