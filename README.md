@@ -40,4 +40,4 @@ Create a web application that displays a gallery of cat images fetched from the 
 
    - Deploy the application to a hosting platform (e.g., Vercel, Netlify, or GitHub Pages) and provide the deployment URL.
 
-   ![preview](https://github.com/Inna-Mykytiuk/cat-gallery-test/blob/main/public/cat.png)
+   ![preview](https://github.com/Inna-Mykytiuk/cat-gallery-test/blob/main/public/cats.png)
