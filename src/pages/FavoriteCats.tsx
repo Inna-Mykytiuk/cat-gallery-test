@@ -1,10 +1,24 @@
 // src/components/FavoriteCats.tsx
-import React from 'react';
+import React, { useState } from 'react';
 import { useCatStore } from '../store/useStore';
 import { FaHeart } from "react-icons/fa6";
+import CatModal from '../components/CatModal'; // Імпорт компоненту CatModal
+import { CatImage } from '../types/catTypes.ts'; // Імпорт типів
 
 const FavoriteCats: React.FC = () => {
   const { favorites, removeFavorite } = useCatStore();
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [selectedCat, setSelectedCat] = useState<CatImage | null>(null);
+
+  const openModal = (cat: CatImage) => {
+    setSelectedCat(cat);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setSelectedCat(null);
+    setIsModalOpen(false);
+  };
 
   return (
     <div className="container">
@@ -18,7 +32,8 @@ const FavoriteCats: React.FC = () => {
               <img
                 src={cat.url}
                 alt={`Favorite Cat ${cat.breeds[0]?.name}`}
-                className="w-full h-48 object-cover"
+                className="w-full h-48 object-cover cursor-pointer"
+                onClick={() => openModal(cat)} // Відкриття модального вікна
               />
               <div className="absolute bottom-0 left-0 right-0 bg-white opacity-80 p-2 text-center">
                 <p>{cat.breeds[0]?.name || 'Unknown Breed'}</p>
@@ -33,6 +48,17 @@ const FavoriteCats: React.FC = () => {
           ))
         )}
       </div>
+      {selectedCat && (
+        <CatModal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          name={selectedCat.breeds[0]?.name || 'Unknown'}
+          temperament={selectedCat.breeds[0]?.temperament || 'Not Available'}
+          description={selectedCat.breeds[0]?.description || 'No description available.'}
+          lifeSpan={selectedCat.breeds[0]?.life_span || 'Unknown'}
+          imageUrl={selectedCat.url}
+        />
+      )}
     </div>
   );
 };
