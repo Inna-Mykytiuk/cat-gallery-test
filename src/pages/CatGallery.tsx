@@ -34,7 +34,7 @@ const CatGallery: React.FC = () => {
   }
 
   return (
-    <section className='pb-[100px]'>
+    <section className='pb-[50px] md:pb-[100px]'>
       <div className='container'>
         <BreedFilter
           selectedBreed={selectedBreed}
@@ -81,7 +81,7 @@ const CatGallery: React.FC = () => {
               <div className="mt-4 flex justify-center">
                 <button
                   onClick={() => setLimit(limit + 9)}
-                  className="p-2 bg-gray-500 text-white text-lg rounded"
+                  className="p-2 bg-gray-500 text-white text-lg rounded hover:bg-gray-600 transition-colors duration-300 ease-out"
                 >
                   Load More
                 </button>

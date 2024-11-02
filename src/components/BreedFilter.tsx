@@ -9,7 +9,7 @@ interface BreedFilterProps {
 
 const BreedFilter: React.FC<BreedFilterProps> = ({ selectedBreed, breeds, setSelectedBreed, setPage }) => {
   return (
-    <div className="flex items-center justify-center gap-8 my-8">
+    <div className="flex items-center justify-center gap-4 my-8">
       <label htmlFor="breed-select" className="block text-lg">
         Select Breed:
       </label>
@@ -17,8 +17,8 @@ const BreedFilter: React.FC<BreedFilterProps> = ({ selectedBreed, breeds, setSel
         id="breed-select"
         value={selectedBreed}
         onChange={(e) => {
-          setSelectedBreed(e.target.value); // Оновлюємо вибрану породу
-          setPage(0); // Скидаємо пагінацію
+          setSelectedBreed(e.target.value);
+          setPage(0);
         }}
         className="rounded-md border border-gray-300 px-4 py-2 shadow-input focus:border-mainBcg focus:outline-none"
       >

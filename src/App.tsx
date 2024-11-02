@@ -1,6 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
-// import CatGallery from './components/Gallery';
 
 import CatGallery from './pages/CatGallery';
 import FavoriteCats from './pages/FavoriteCats';
@@ -12,7 +11,6 @@ function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<CatGallery />} />
         <Route path="favorites" element={<FavoriteCats />} />
-        {/* <Route index element={<CatGallery />} /> */}
       </Route>
     </Routes>
   );
