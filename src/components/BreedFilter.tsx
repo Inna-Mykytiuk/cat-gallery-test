@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface BreedFilterProps {
   selectedBreed: string;
   breeds: Array<{ id: string; name: string }>;
@@ -7,10 +5,14 @@ interface BreedFilterProps {
   setPage: (page: number) => void;
 }
 
-const BreedFilter: React.FC<BreedFilterProps> = ({ selectedBreed, breeds, setSelectedBreed, setPage }) => {
+const BreedFilter: React.FC<BreedFilterProps> = ({
+  selectedBreed,
+  breeds,
+  setSelectedBreed,
+  setPage,
+}) => {
   return (
-
-    <div className="flex items-center justify-center gap-0 sm:gap-4 my-2 sm:my-8">
+    <div className="my-2 flex items-center justify-center gap-0 sm:my-8 sm:gap-4">
       <label htmlFor="breed-select" className="block text-base sm:text-lg">
         Select Breed:
       </label>

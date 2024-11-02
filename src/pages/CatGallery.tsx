@@ -1,22 +1,26 @@
-import React, { useState } from 'react';
-import { useCatStore } from '../store/useStore';
+import React, { useState } from "react";
 import { FaHeart } from "react-icons/fa6";
-import { useBreeds, useCatImages } from '../hooks/useCatQueries';
-import { CatImage } from '../types/catTypes.ts'; // Зміна імпорту
 
-import BreedFilter from '../components/BreedFilter';
-import CatModal from '../components/CatModal';
+import BreedFilter from "../components/BreedFilter";
+import CatModal from "../components/CatModal";
+import { useBreeds, useCatImages } from "../hooks/useCatQueries";
+import { useCatStore } from "../store/useStore";
+import { CatImage } from "../types/catTypes.ts";
 
 const CatGallery: React.FC = () => {
   const [limit, setLimit] = useState<number>(9);
-  const [selectedBreed, setSelectedBreed] = useState<string>('');
+  const [selectedBreed, setSelectedBreed] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedCat, setSelectedCat] = useState<CatImage | null>(null);
   const [, setPage] = useState<number>(0);
 
   const { favorites, addFavorite, removeFavorite } = useCatStore();
   const { data: breeds = [], error: breedsError } = useBreeds();
-  const { data: catImages = [], error: imagesError, isLoading } = useCatImages(selectedBreed);
+  const {
+    data: catImages = [],
+    error: imagesError,
+    isLoading,
+  } = useCatImages(selectedBreed);
 
   const openModal = (cat: CatImage) => {
     setSelectedCat(cat);
@@ -34,8 +38,8 @@ const CatGallery: React.FC = () => {
   }
 
   return (
-    <section className='pb-[50px] md:pb-[100px]'>
-      <div className='container'>
+    <section className="pb-[50px] md:pb-[100px]">
+      <div className="container">
         <BreedFilter
           selectedBreed={selectedBreed}
           breeds={breeds}
@@ -43,34 +47,41 @@ const CatGallery: React.FC = () => {
           setPage={setPage}
         />
         {isLoading ? (
-          <div className="flex justify-center items-center h-64">
+          <div className="flex h-64 items-center justify-center">
             <span className="loader">Loading...</span>
           </div>
         ) : (
           <>
             <ul className="custom-grid mt-4">
               {catImages.slice(0, limit).map((cat) => (
-                <li key={cat.id} className="relative shadow-custom-card rounded-md overflow-hidden">
+                <li
+                  key={cat.id}
+                  className="relative overflow-hidden rounded-md shadow-custom-card"
+                >
                   <img
                     src={cat.url}
                     alt={`Cat ${cat.breeds[0]?.name}`}
-                    className="w-full h-full object-cover object-center cursor-pointer hover:scale-110 transition-all duration-200 ease-in-out"
+                    className="h-full w-full cursor-pointer object-cover object-center transition-all duration-200 ease-in-out hover:scale-110"
                     onClick={() => openModal(cat)}
                   />
-                  <div className="absolute bottom-0 left-0 right-0 bg-black/20 backdrop-blur-sm py-4 px-4 text-center z-50 flex items-center justify-between">
-                    <p className='text-white'>{cat.breeds[0]?.name || 'Unknown Breed'}</p>
+                  <div className="absolute bottom-0 left-0 right-0 z-50 flex items-center justify-between bg-black/20 px-4 py-4 text-center backdrop-blur-sm">
+                    <p className="text-white">
+                      {cat.breeds[0]?.name || "Unknown Breed"}
+                    </p>
                     <button
+                      type="button"
+                      aria-label="Add to favorites"
                       onClick={() => {
-                        if (favorites.some(fav => fav.id === cat.id)) {
+                        if (favorites.some((fav) => fav.id === cat.id)) {
                           removeFavorite(cat);
                         } else {
                           addFavorite(cat);
                         }
                       }}
-                      className="flex items-center justify-center text-xl group"
+                      className="group flex items-center justify-center text-xl"
                     >
                       <FaHeart
-                        className={`mr-1 transition-colors duration-300 ${favorites.some(fav => fav.id === cat.id) ? 'text-red-500' : 'text-white/70 group-hover:text-red-500'}`}
+                        className={`mr-1 transition-colors duration-300 ${favorites.some((fav) => fav.id === cat.id) ? "text-red-500" : "text-white/70 group-hover:text-red-500"}`}
                       />
                     </button>
                   </div>
@@ -80,8 +91,9 @@ const CatGallery: React.FC = () => {
             {limit < catImages.length && (
               <div className="mt-4 flex justify-center">
                 <button
+                  type="button"
                   onClick={() => setLimit(limit + 9)}
-                  className="p-2 bg-gray-500 text-white text-lg rounded hover:bg-gray-600 transition-colors duration-300 ease-out"
+                  className="rounded bg-gray-500 p-2 text-lg text-white transition-colors duration-300 ease-out hover:bg-gray-600"
                 >
                   Load More
                 </button>
@@ -93,10 +105,12 @@ const CatGallery: React.FC = () => {
           <CatModal
             isOpen={isModalOpen}
             onClose={closeModal}
-            name={selectedCat.breeds[0]?.name || 'Unknown'}
-            temperament={selectedCat.breeds[0]?.temperament || 'Not Available'}
-            description={selectedCat.breeds[0]?.description || 'No description available.'}
-            lifeSpan={selectedCat.breeds[0]?.life_span || 'Unknown'}
+            name={selectedCat.breeds[0]?.name || "Unknown"}
+            temperament={selectedCat.breeds[0]?.temperament || "Not Available"}
+            description={
+              selectedCat.breeds[0]?.description || "No description available."
+            }
+            lifeSpan={selectedCat.breeds[0]?.life_span || "Unknown"}
             imageUrl={selectedCat.url}
           />
         )}

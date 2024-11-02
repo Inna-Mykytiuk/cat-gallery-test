@@ -1,9 +1,9 @@
-import { Route, Routes } from 'react-router-dom';
-import './App.css';
+import { Route, Routes } from "react-router-dom";
 
-import CatGallery from './pages/CatGallery';
-import FavoriteCats from './pages/FavoriteCats';
-import Layout from './components/Layout';
+import "./App.css";
+import Layout from "./components/Layout";
+import CatGallery from "./pages/CatGallery";
+import FavoriteCats from "./pages/FavoriteCats";
 
 function App() {
   return (

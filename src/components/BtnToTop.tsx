@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FaRegArrowAltCircleUp } from "react-icons/fa";
 
 export default function BtnToTop() {
@@ -49,19 +49,14 @@ export default function BtnToTop() {
 
   return (
     <div
-      className={`fixed z-50 right-4 transition-opacity duration-250 cursor-pointer
-        ${showTopBtn
-          ? "opacity-100 bottom-20"
-          : "opacity-0 pointer-events-none bottom-16"
-        }
-        ${showTopBtn ? "w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14" : ""}
-        ${showTopBtn ? "rounded-full" : ""}
-      `}
+      className={`duration-250 fixed right-4 z-50 cursor-pointer transition-opacity ${
+        showTopBtn
+          ? "bottom-20 opacity-100"
+          : "pointer-events-none bottom-16 opacity-0"
+      } ${showTopBtn ? "h-10 w-10 md:h-12 md:w-12 lg:h-14 lg:w-14" : ""} ${showTopBtn ? "rounded-full" : ""} `}
       onClick={goToTop}
     >
-      <FaRegArrowAltCircleUp className="w-full h-full text-lightBlue hover:text-mainBlue" />
+      <FaRegArrowAltCircleUp className="text-lightBlue hover:text-mainBlue h-full w-full" />
     </div>
   );
 }
-
-//test

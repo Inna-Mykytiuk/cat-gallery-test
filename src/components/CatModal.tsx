@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 
 interface CatModalProps {
   isOpen: boolean;
@@ -21,17 +21,17 @@ const CatModal: React.FC<CatModalProps> = ({
 }) => {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
+      if (event.key === "Escape") {
         onClose();
       }
     };
 
     if (isOpen) {
-      window.addEventListener('keydown', handleKeyDown);
+      window.addEventListener("keydown", handleKeyDown);
     }
 
     return () => {
-      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener("keydown", handleKeyDown);
     };
   }, [isOpen, onClose]);
 
@@ -39,19 +39,28 @@ const CatModal: React.FC<CatModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
       onClick={onClose}
     >
       <div
-        className="bg-white p-6 rounded-lg w-11/12 max-w-md max-h-[80vh] overflow-y-auto relative" // Додаємо max-h та overflow-y-auto
+        className="relative max-h-[80vh] w-11/12 max-w-md overflow-y-auto rounded-lg bg-white p-6"
         onClick={(e) => e.stopPropagation()}
       >
-        <button onClick={onClose} className="absolute top-0 right-2 text-2xl text-black/50 font-bold">
+        <button
+          type="button"
+          aria-label="Close modal button"
+          onClick={onClose}
+          className="absolute right-2 top-0 text-2xl font-bold text-black/50"
+        >
           ×
         </button>
-        <img src={imageUrl} alt={`Cat ${name}`} className="w-full h-auto object-cover rounded-md mb-4" />
-        <h2 className="text-2xl font-bold mb-2">{name}</h2>
-        <p className="italic text-sm mb-4">{temperament}</p>
+        <img
+          src={imageUrl}
+          alt={`Cat ${name}`}
+          className="mb-4 h-auto w-full rounded-md object-cover"
+        />
+        <h2 className="mb-2 text-2xl font-bold">{name}</h2>
+        <p className="mb-4 text-sm italic">{temperament}</p>
         <p className="mb-4">{description}</p>
         <p className="font-semibold">Life Span: {lifeSpan} years</p>
       </div>
