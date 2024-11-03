@@ -1,0 +1,1 @@
+import{j as e}from"./index-DkW6z3w1.js";const t=()=>e.jsx("section",{className:"flex h-screen w-full items-center justify-center pt-[50px] md:pt-[100px]",children:e.jsx("div",{className:"container flex items-center justify-center",children:e.jsx("p",{className:"loader",children:"Loading..."})})});export{t as default};
