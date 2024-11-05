@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { createPortal } from "react-dom";
 
 interface CatModalProps {
   isOpen: boolean;
@@ -9,6 +10,12 @@ interface CatModalProps {
   lifeSpan: string;
   imageUrl: string;
 }
+
+const modalRoot = document.querySelector("#modal-root");
+
+const toggleBodyOverflow = (toggle: boolean) => {
+  document.body.style.overflow = toggle ? "hidden" : "auto";
+};
 
 const CatModal: React.FC<CatModalProps> = ({
   isOpen,
@@ -28,16 +35,20 @@ const CatModal: React.FC<CatModalProps> = ({
 
     if (isOpen) {
       window.addEventListener("keydown", handleKeyDown);
+      toggleBodyOverflow(true); // Виклик для приховування прокрутки
+    } else {
+      toggleBodyOverflow(false); // Відновлення прокрутки при закритті
     }
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
+      toggleBodyOverflow(false); // Відновлення прокрутки після видалення компонента
     };
   }, [isOpen, onClose]);
 
-  if (!isOpen) return null;
+  if (!isOpen || !modalRoot) return null; // Перевірка modalRoot
 
-  return (
+  return createPortal(
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
       onClick={onClose}
@@ -64,7 +75,8 @@ const CatModal: React.FC<CatModalProps> = ({
         <p className="mb-4">{description}</p>
         <p className="font-semibold">Life Span: {lifeSpan} years</p>
       </div>
-    </div>
+    </div>,
+    modalRoot,
   );
 };
 
